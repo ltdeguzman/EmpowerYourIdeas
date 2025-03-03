@@ -1,0 +1,238 @@
+import os
+import openai
+import streamlit as st
+from openai import OpenAI
+import pandas as pd
+import toml
+
+openai.api_key = st.secrets["OPENAI_API_KEY"]
+client = OpenAI()
+
+st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+st.sidebar.image("Goals/Logo.jpg", use_column_width=True)
+
+col1, col2 = st.columns([0.6, 4])
+with col1:
+    st.image("Goals/Logo.jpg", width=125)
+with col2:
+    st.header("Brainstorm Sustainable Development Goals for Impactful Student Projects", divider="blue")
+
+primaryColor = toml.load(".streamlit/config.toml")['theme']['primaryColor']
+s = f"""
+<style>
+div.stButton > button:first-child {{ border: 5px solid {primaryColor}; border-radius:20px 20px 20px 20px; }}
+<style>
+"""
+st.markdown(s, unsafe_allow_html=True)
+style = "<style>.row-widget.stButton {text-align: center;}</style>"
+st.markdown(style, unsafe_allow_html=True)
+m = st.markdown("""
+    <style>
+    div.stButton > button:first-child {
+        background-color: #2D694B;
+        color:#ffffff;
+    }
+    div.stButton > button:hover {
+        background-color: #A1DAA1;
+        color:#000000;
+    }
+    div.stButton > button:focus {
+        background-color: #A1DAA1;
+        color:#000000;
+    }
+    </style>""", unsafe_allow_html=True)
+
+st.caption("Welcome to Empower Your Ideas, the ultimate platform for students to brainstorm and develop projects that contribute to a better world. Here, we encourage you to harness your creativity and passion to address the United Nations' Sustainable Development Goals (SDGs). The UN's 17 SDGs are a universal call to action to end poverty, protect the planet, and ensure that all people enjoy peace and prosperity by 2030. From quality education and gender equality to climate action and sustainable cities, these goals provide a comprehensive framework for global development. Together, we can build a sustainable future!")
+
+st.write("**Please click on a button below to learn more about the Sustainable Development Goals and start brainstorming your project ideas:**")
+
+cl1, cl2, cl3, cl4, cl5, cl6, cl7, cl8, cl9 = st.columns(9)
+with cl1:
+    st.image("Goals/Goal#1.png")
+    goal1 = st.button("**SDG #1**")
+with cl2:
+    st.image("Goals/Goal#2.png")
+    goal2 = st.button("**SDG #2**")
+with cl3:
+    st.image("Goals/Goal#3.png")
+    goal3 = st.button("**SDG #3**")
+with cl4:
+    st.image("Goals/Goal#4.png")
+    goal4 = st.button("**SDG #4**")
+with cl5:
+    st.image("Goals/Goal#5.png")
+    goal5 = st.button("**SDG #5**")
+with cl6:
+    st.image("Goals/Goal#6.png")
+    goal6 = st.button("**SDG #6**")
+with cl7:
+    st.image("Goals/Goal#7.png")
+    goal7 = st.button("**SDG #7**")
+with cl8:
+    st.image("Goals/Goal#8.png")
+    goal8 = st.button("**SDG #8**")
+with cl9:
+    st.image("Goals/Goal#9.png")
+    goal9 = st.button("**SDG #9**")
+
+cl10, cl11, cl12, cl13, cl14, cl15, cl16, cl17, cl18 = st.columns(9)
+with cl10:
+    st.image("Goals/Goal#10.png")
+    goal10 = st.button("**SDG #10**")
+with cl11:
+    st.image("Goals/Goal#11.png")
+    goal11 = st.button("**SDG #11**")
+with cl12:
+    st.image("Goals/Goal#12.png")
+    goal12 = st.button("**SDG #12**")
+with cl13:
+    st.image("Goals/Goal#13.png")
+    goal13 = st.button("**SDG #13**")
+with cl14:
+    st.image("Goals/Goal#14.png")
+    goal14 = st.button("**SDG #14**")
+with cl15:
+    st.image("Goals/Goal#15.png")
+    goal15 = st.button("**SDG #15**")
+with cl16:
+    st.image("Goals/Goal#16.png")
+    goal16 = st.button("**SDG #16**")
+with cl17:
+    st.image("Goals/Goal#17.png")
+    goal17 = st.button("**SDG #17**")
+
+def get_completion(prompt, model = "gpt-3.5-turbo", max_tokens = 20000):
+    completion = client.chat.completions.create(
+                model=model,
+                messages=[
+                {"role":"system",
+                "content": "You are a helpful AI assistant tasked with providing project ideas that address the United Nations' Sustainable Development Goals (SDGs). Please brainstorm ideas that align with the following SDG:" + prompt + 
+                "Use the format: \
+                1. provide a brief description of the sustainable development goal asked in" + prompt +
+                "2. Give three examples of how United States is trying to acheive this goal\
+                3. brainstorm three ai related project ideas that students can work on to contribute to this goal\
+                3. politely ask the user if they would like to learn more about this goal or if they would like to explore other sustainable development goals. then click on another goal."},
+                {"role": "user",
+                "content":prompt},
+                ]
+            )
+    return completion.choices[0].message.content
+
+if goal1:
+    st.subheader("Sustainable Development Goal #1: End poverty")
+    prompt = "Sustainable Development Goal #1: End poverty in all its forms everywhere."
+    response = get_completion(prompt)
+    st.markdown(response)
+if goal2:
+    st.subheader("Sustainable Development Goal #2: End hunger")
+    prompt = "Sustainable Development Goal #2: End hunger, achieve food security and improved nutrition, and promote sustainable agriculture." 
+    response = get_completion(prompt)
+    st.write(response)
+if goal3:
+    st.subheader("Sustainable Development Goal #3: Good Health and well being")
+    prompt = "Sustainable Development Goal #3: Good Health and well being. Ensure healthy lives and promote well-being for all at all ages."
+    response = get_completion(prompt)
+    st.write(response)
+if goal4:
+    st.subheader("Sustainable Development Goal #4: Quality Education")
+    prompt = "Sustainable Development Goal #4: Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all." 
+    response = get_completion(prompt)
+    st.write(response)
+if goal5:
+    st.subheader("Sustainable Development Goal #5: Gender Equality")
+    prompt = "Sustainable Development Goal #5: Gender Equality"
+    response = get_completion(prompt)
+    st.write(response)
+if goal6:
+    st.subheader("Sustainable Development Goal #6: Clean Water and Sanitation")
+    prompt = "Sustainable Development Goal #6: Clean Water and Sanitation"
+    response = get_completion(prompt)
+    st.write(response)
+if goal7:
+    st.subheader("Sustainable Development Goal #7: Affordable and Clean Energy")
+    prompt = "Sustainable Development Goal #7: Affordable and Clean Energy"
+    response = get_completion(prompt)
+    st.write(response)
+if goal8:
+    st.subheader("Sustainable Development Goal #8: Decent Work and Economic Growth")
+    prompt = "Sustainable Development Goal #8: Decent Work and Economic Growth"
+    response = get_completion(prompt)
+    st.write(response)
+if goal9:
+    st.subheader("Sustainable Development Goal #9: Industry, Innovation, and Infrastructure")
+    prompt = "Sustainable Development Goal #9: Industry, Innovation, and Infrastructure"
+    response = get_completion(prompt)
+    st.write(response)
+if goal10:
+    st.subheader("Sustainable Development Goal #10: Reduced Inequality")
+    prompt = "Sustainable Development Goal #10: Reduced Inequality"
+    response = get_completion(prompt)
+    st.write(response)
+if goal11:
+    st.subheader("Sustainable Development Goal #11: Sustainable Cities and Communities")
+    prompt = "Sustainable Development Goal #11: Sustainable Cities and Communities"
+    response = get_completion(prompt)
+    st.write(response)
+if goal12:
+    st.subheader("Sustainable Development Goal #12: Responsible Consumption and Production")
+    prompt = "Sustainable Development Goal #12: Responsible Consumption and Production"
+    response = get_completion(prompt)
+    st.write(response)
+if goal13:
+    st.subheader("Sustainable Development Goal #13: Climate Action")
+    prompt = "Sustainable Development Goal #13: Climate Action"
+    response = get_completion(prompt)
+    st.write(response)
+if goal14:
+    st.subheader("Sustainable Development Goal #14: Life Below Water")
+    prompt = "Sustainable Development Goal #14: Life Below Water"
+    response = get_completion(prompt)
+    st.write(response)
+if goal15:
+    st.subheader("Sustainable Development Goal #15: Life on Land")
+    prompt = "Sustainable Development Goal #15: Life on Land"
+    response = get_completion(prompt)
+    st.write(response)
+if goal16:
+    st.subheader("Sustainable Development Goal #16: Peace, Justice, and Strong Institutions")
+    prompt = "Sustainable Development Goal #16: Peace, Justice, and Strong Institutions"
+    response = get_completion(prompt)
+    st.write(response)
+if goal17:
+    st.subheader("Sustainable Development Goal #17: Partnerships for the Goals")
+    prompt = "Sustainable Development Goal #17: Partnerships for the Goals"
+    response = get_completion(prompt)
+    st.write(response)
+
+st.subheader("Let's brainstorm project ideas for the Sustainable Development Goals!")
+st.write("**Please enter either your interests or problem you are trying to solve to get project ideas that align with the Sustainable Development Goals:**")
+
+cl1, cl2= st.columns(2)
+with cl1:
+    interests = st.text_input("**Please enter your interests or things that you are passionate about:**")
+with cl2:
+    problem = st.text_input("**Please enter the problem you are trying to solve:**")
+    
+technology = st.multiselect("**Select the technologies you are interested in:**", ["Text Generation", "Image Generation", "Speech to Text", "Text Summarization", "Key Point Extraction", "Action Item Extraction", "Sentiment Analysis", "Language Translation", "Text to Speech", "Computer Vision", "Chatbot"])
+delimiter = ', '
+technology_string = delimiter.join(technology)
+get_project_ideas = st.button("**Get Project Ideas**")
+
+if technology and get_project_ideas:
+    def get_completion(prompt, model = "gpt-3.5-turbo"):
+        completion = client.chat.completions.create(
+        model=model,
+        messages=[
+        {"role":"system",
+        "content": "You are an expert in UN SDG. Your job is to help students with a strong interest in " + interests + " to brainstorm project ideas that align with the United Nations' Sustainable Development Goals (SDGs). Please provide AI related project ideas that uses the technologies in" + technology_string + "that are relevant to the following interests:" + interests + "or the problem in:" + problem},
+        {"role": "user",
+        "content":prompt},
+        ]
+    )
+        return completion.choices[0].message.content
+    response = get_completion(interests)
+    st.write(response)
+
+st.caption("We hope you found these project ideas inspiring! Remember, the Sustainable Development Goals are a powerful tool for creating positive change in the world. By aligning your projects with the SDGs, you can make a real impact on global issues and contribute to a more sustainable future. If you would like to explore more project ideas or learn more about the SDGs, feel free to click on another goal above. Thank you for using Empower Your Ideas, and best of luck with your projects!")
+
+
